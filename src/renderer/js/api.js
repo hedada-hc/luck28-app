@@ -88,5 +88,19 @@ export default{
 					cb(error,null)
 				}
 			})
+	},Relief(){
+		//领取救济
+		var sign = this.Sign("Speed28","relief",token);
+		var data = `timestamp=${sign.time}&sign=${sign.sign}&token=${token}&imei=${sign.imei}&device=sm%20-%20g530h&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521`
+		var url = `http://interface.juxiangzuan.com/mobile.php?c=Speed28&a=relief`
+		su.post(url)
+			.send(data)
+			.end((error, response)=>{
+				if(!error){
+					cb(null,JSON.parse(response.text))
+				}else{
+					cb(error,null)
+				}
+			})
 	}
 }
