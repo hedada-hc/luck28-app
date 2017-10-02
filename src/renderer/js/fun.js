@@ -57,5 +57,21 @@ export default{
 		var now = this.formatDateTime(parseInt(new Date().getTime().toString().substr(0,10)),true)
 		var date = new Date(time[0],time[1],time[2],time[3],time[4],time[5]) - new Date(now[0],now[1],now[2],now[3],now[4],now[5]);
 		return date / 1000
+	},
+	isModel(num){
+		var is = "";
+		if(num >= 14){
+			is = "大"
+		}else{
+			is = "小"
+		}
+
+		if(num % 2 == 0){
+			is += "双"
+		}else{
+			is += "单"
+		}
+
+		return is;
 	}
 }

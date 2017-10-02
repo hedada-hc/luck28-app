@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: 'luck28'
+    name: 'luck28-app'
   }
 </script>
 

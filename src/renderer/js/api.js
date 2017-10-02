@@ -6,6 +6,7 @@ import md5 from 'js-md5'
 import request from "request"
 import su from "superagent"
 import fun from './fun'
+import bet from './model'
 export default{
 	Sign(v0, v1, token){
 		//api sign算法
@@ -74,16 +75,19 @@ export default{
 				}
 			})
 	},
-	game28Bet(token,qihao,cb){
+	game28Bet(token,qihao,num,cb){
 		//投注疯狂28
+		var insertBet = bet.betData(fun.isModel(num));
 		var sign = this.Sign("NewSpeed28","betSave",token);
-		var data = `device=sm%20-%20g530h&versionCode=521&token=${token}&timestamp=${sign.time}&devicetype=2&imei=${sign.imei}&version=521&channel=yingyongbao&versionName=2.1.1&periodNO=${qihao}&sign=${sign.sign}&${fun.betData()}`
+		var data = `device=sm%20-%20g530h&versionCode=521&token=${token}&timestamp=${sign.time}&devicetype=2&imei=${sign.imei}&version=521&channel=yingyongbao&versionName=2.1.1&periodNO=${qihao}&sign=${sign.sign}&${insertBet.bet}`
 		var url = `http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=betSave`
 		su.post(url)
 			.send(data)
 			.end((error, response)=>{
 				if(!error){
-					cb(null,JSON.parse(response.text))
+					var res = JSON.parse(response.text)
+					res.betNum = insertBet.betNum
+					cb(null,res)
 				}else{
 					cb(error,null)
 				}

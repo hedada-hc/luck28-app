@@ -20,7 +20,7 @@
 				<td>单 小单</td>
 				<td>
 					<p v-if="item.winLoss > 0">盈利: {{item.winLoss}}</p>
-					<button v-else-if="item.num1 == null" @click="bet(item.periodNO)">投注</button>
+					<button v-else-if="item.num1 == null" @click="bet(item.periodNO)">{{item.winNO == null ? '投注' : item.winNO}}</button>
 					<p class="wei" v-else-if="item.winLoss == '-'">已开奖</p>
 					<p v-else class="kui">亏: {{item.winLoss}}</p>
 				</td>
@@ -46,13 +46,21 @@
 					this.game28List();
 				}else{
 					this.time -= 1
+					if(this.time == 69) this.bet(this.game[0].periodNO)
 				}
+
 			},1000)
 		},
 		methods:{
 			bet(qihao){
-				this.api.game28Bet(this.user.jxy.data.token,qihao,(error, response)=>{
-					console.log(response)
+				this.api.game28Bet(this.user.jxy.data.token,qihao,this.game[1].winNO,(error, response)=>{
+					if(response.code == 200){
+						this.game[0].winNO = response.betNum
+						console.log("第 "+qihao+" 期,投注成功 共投注 "+response.betNum+" 豆豆"+ new Date().toString())
+					}else{
+						console.log("第 "+qihao+" 期,投注失败"+response.msg + new Date().toString())
+					}
+					
 				});
 			},
 			handleTime(time){

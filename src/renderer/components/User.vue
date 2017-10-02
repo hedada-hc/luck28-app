@@ -28,8 +28,22 @@
 				user:{
 					jxy_username:"1006123126@qq.com",
 					jxy_password:"hdd0313",
-					jxy_data:{},
-					UserMoney:{}
+					jxy_data:{
+						"jxy":{
+							"data":{
+								"image":"http://y1.ifengimg.com/hdslide_newedtion/hdslide_logo_new.jpg",
+								"nick_name":"test"
+							}
+						}
+					},
+					UserMoney:{
+						"code":0,
+						"data":{
+							"userF":0,
+							"userG":0,
+						}
+
+					}
 				}
 			}
 		},

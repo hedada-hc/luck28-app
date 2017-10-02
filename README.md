@@ -1,6 +1,6 @@
-# luck28
+# luck28-app
 
-> 幸运28全自动投注挂机辅助
+> An electron-vue project
 
 #### Build Setup
 
