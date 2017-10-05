@@ -4,17 +4,17 @@
 */
 const defaultOdds28 = [1,3,6,10,15,21,28,36,45,55,63,69,73,75,75,73,69,63,55,45,36,28,21,15,10,6,3,1]
 export default{
-	betData(bet){
+	betData(bet, x = 3){
 		//生成投注数据
 		bet = this.defaultModel(bet,true)
 		var betting = ""
 		var betNum = 0
 		for(var i=0;i<bet.length;i++){
-			betNum += bet[i]
+			betNum += bet[i] * x
 			if(i == 27){
-				betting += `N${i}=${bet[i]}`
+				betting += `N${i}=${bet[i] * x}`
 			}else{
-				betting += `N${i}=${bet[i]}&`
+				betting += `N${i}=${bet[i] * x}&`
 			}
 		}
 		return {"bet":betting,"betNum":betNum};
