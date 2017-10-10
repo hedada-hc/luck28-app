@@ -21,6 +21,11 @@ export default new Router({
       component: require('@/components/Game/Game28List')
     },
     {
+      path: '/model',
+      name: 'model-page',
+      component: require('@/components/Game/Model')
+    },
+    {
       path: '*',
       redirect: '/'
     }

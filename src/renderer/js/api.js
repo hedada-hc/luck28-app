@@ -108,3 +108,25 @@ export default{
 			})
 	}
 }
+
+
+/*
+http://interface.juxiangzuan.com/mobile.php?c=Quiz&a=quizRank  排行榜
+timestamp=1507601578771&sign=fcbf9083d78f88d3ad9cc6c597fcf38d&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNjE4Mjc3LCJhcHBpZCI6MiwidCI6MTUwNzYwMTU2NiwiciI6ImU5NTZhYyIsInAiOiJkMWM4MzgifQ.ad6a6cd97b5d4a8679c0641f7fc61158a67353680e62fba0fa631190fc5a39d1&imei=4190a5a5-1795-3663-b3a0-12d16ba42232&device=X9077&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521
+
+http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=lists 开奖数据 2页 疯狂28
+timestamp=1507601709474&sign=990e6a375bf8154e19e1038f41678048&page=2&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNjE4Mjc3LCJhcHBpZCI6MiwidCI6MTUwNzYwMTU2NiwiciI6ImU5NTZhYyIsInAiOiJkMWM4MzgifQ.ad6a6cd97b5d4a8679c0641f7fc61158a67353680e62fba0fa631190fc5a39d1&imei=4190a5a5-1795-3663-b3a0-12d16ba42232&device=X9077&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521
+
+http://interface.juxiangzuan.com/mobile.php?c=Quiz&a=receiveWage 领取竞猜工资
+timestamp=1507601761512&sign=7c8ac4e5277c8daa3b55d52407ce26c3&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNjE4Mjc3LCJhcHBpZCI6MiwidCI6MTUwNzYwMTU2NiwiciI6ImU5NTZhYyIsInAiOiJkMWM4MzgifQ.ad6a6cd97b5d4a8679c0641f7fc61158a67353680e62fba0fa631190fc5a39d1&imei=4190a5a5-1795-3663-b3a0-12d16ba42232&device=X9077&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521
+
+http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=betRecord 我的投注 按期
+timestamp=1507601789917&sign=dc62488b7fa5de3c7c858f9e5f798444&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNjE4Mjc3LCJhcHBpZCI6MiwidCI6MTUwNzYwMTU2NiwiciI6ImU5NTZhYyIsInAiOiJkMWM4MzgifQ.ad6a6cd97b5d4a8679c0641f7fc61158a67353680e62fba0fa631190fc5a39d1&imei=4190a5a5-1795-3663-b3a0-12d16ba42232&device=X9077&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&pageIndex=1&version=521
+
+http://interface.juxiangzuan.com/mobile.php?c=Speed28&a=relief 领取救济
+timestamp=1507601960234&sign=c30787941d8327847264c6db9848db01&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNjE4Mjc3LCJhcHBpZCI6MiwidCI6MTUwNzYwMTU2NiwiciI6ImU5NTZhYyIsInAiOiJkMWM4MzgifQ.ad6a6cd97b5d4a8679c0641f7fc61158a67353680e62fba0fa631190fc5a39d1&imei=4190a5a5-1795-3663-b3a0-12d16ba42232&device=X9077&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521
+
+http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=trend 走势图
+timestamp=1507601986719&sign=faab9ab13b1a4e334bbd43294ad0731b&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNjE4Mjc3LCJhcHBpZCI6MiwidCI6MTUwNzYwMTU2NiwiciI6ImU5NTZhYyIsInAiOiJkMWM4MzgifQ.ad6a6cd97b5d4a8679c0641f7fc61158a67353680e62fba0fa631190fc5a39d1&imei=4190a5a5-1795-3663-b3a0-12d16ba42232&device=X9077&versionCode=521&quantity=500&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521
+
+*/

@@ -27,6 +27,7 @@
     "crypto": "^1.0.1",
     "fs": "0.0.1-security",
     "js-md5": "^0.6.0",
+    "moment": "^2.18.1",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "superagent": "^3.6.2",

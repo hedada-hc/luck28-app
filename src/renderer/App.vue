@@ -4,7 +4,8 @@
   		<li><router-link to="/">首页</router-link> </li>
   		<li><router-link to="/user">账号管理</router-link> </li>
   		<li><router-link to="/user">投注设置</router-link> </li>
-  		<li><router-link to="/list">开奖数据</router-link> </li>
+      <li><router-link to="/list">开奖数据</router-link> </li>
+  		<li><router-link to="/model">模式设置</router-link> </li>
   	</ul>
     <router-view></router-view>
   </div>

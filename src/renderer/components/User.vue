@@ -28,14 +28,7 @@
 				user:{
 					jxy_username:"1006123126@qq.com",
 					jxy_password:"hdd0313",
-					jxy_data:{
-						"jxy":{
-							"data":{
-								"image":"http://y1.ifengimg.com/hdslide_newedtion/hdslide_logo_new.jpg",
-								"nick_name":"test"
-							}
-						}
-					},
+					jxy_data:null,
 					UserMoney:{
 						"code":0,
 						"data":{
@@ -48,7 +41,9 @@
 			}
 		},
 		created(){
-			this.user.jxy_data = this.fun.Query("user") == null ? {} : JSON.parse(this.fun.Query("user"));
+			
+			var tmp = {"jxy":{"data":{"image":"http://y1.ifengimg.com/hdslide_newedtion/hdslide_logo_new.jpg","nick_name":"test"}}}
+			this.user.jxy_data = this.fun.Query("user") == null ? tmp : JSON.parse(this.fun.Query("user"));
 			this.api.getUser(this.user.jxy_data.jxy.data.token,(error, response)=>{
 				this.user.UserMoney = response
 				console.log(response,this.user.jxy_data )

@@ -45,11 +45,11 @@ export default{
 	    var minute = date.getMinutes();  
 	    var second = date.getSeconds();  
 	    minute = minute < 10 ? ('0' + minute) : minute;    
-	    second = second < 10 ? ('0' + second) : second;   
+	    second = second < 10 ? ('0' + second) : second;
 	    if(type == false){
-	    	return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second; 
+	    	return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
 	    }
-	    return [y,m,d,h,minute,second]
+	    return [y,m,d,h,minute,second];
 	},
 	scheduleTime(strTime){
 		//09-30 17:09:30
@@ -73,5 +73,16 @@ export default{
 		}
 
 		return is;
+	},
+	AddLocal(name,data){
+		var tmp = this.Query(name);
+		if(tmp != null){
+			tmp = JSON.parse(tmp)
+			if(Array.isArray(tmp)){
+				
+			}else{
+				
+			}
+		}
 	}
 }

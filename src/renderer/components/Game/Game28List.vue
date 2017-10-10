@@ -1,6 +1,8 @@
 <template>
 	<div class="game">
+		<h6>当前金币:{{user.UserMoney.data.userF}}</h6>
 		<p>距离第 {{this.game[0].periodNO}} 期开奖还剩 {{time}} 秒</p>
+		<button @click="startHook">开始挂机</button>
 		<table>
 			<tr class="game_head">
 				<th>期号</th>
@@ -34,26 +36,30 @@
 	export default{
 		data(){
 			return{
-				user:{},
+				user:null,
 				game:[{"periodNO":0}],
-				time:0
+				time:0,
 			}
 		},
 		created(){
 			this.user = this.fun.Query("user") == null ? {} : JSON.parse(this.fun.Query("user"));
-			setInterval(()=>{
-				if(this.time <=0){
-					this.game28List();
-				}else{
-					this.time -= 1
-					if(this.time == 69) this.bet(this.game[0].periodNO)
-				}
-
-			},1000)
+			this.user.UserMoney = {"data":{"userF":0}}
+			this.game28List();
 		},
 		methods:{
+			startHook(){
+				setInterval(()=>{
+					if(this.time <=0){
+						this.game28List();
+					}else{
+						this.time -= 1
+						if(this.time == 69) this.bet(this.game[0].periodNO)
+					}
+				},1000)
+			},
 			bet(qihao){
 				this.api.game28Bet(this.user.jxy.data.token,qihao,this.game[1].winNO,(error, response)=>{
+					console.log(error,response)
 					if(response.code == 200){
 						this.game[0].winNO = response.betNum
 						console.log("第 "+qihao+" 期,投注成功 共投注 "+response.betNum+" 豆豆"+ new Date().toString())
@@ -68,12 +74,18 @@
 			},
 			duleTime(){
 				this.time = this.fun.scheduleTime(this.game[0].cDate);
+				this.getUser();
 			},
 			game28List(){
 				this.api.getGame28(this.user.jxy.data.token,(error, response)=>{
 					response.data.past.unshift(response.data.current[2])
 					this.game = response.data.past
 					this.duleTime();
+				});
+			},
+			getUser(){
+				this.api.getUser(this.user.jxy.data.token,(error, response)=>{
+					this.user.UserMoney = response
 				});
 			}
 		}
