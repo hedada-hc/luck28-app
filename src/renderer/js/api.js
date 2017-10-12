@@ -92,11 +92,55 @@ export default{
 					cb(error,null)
 				}
 			})
-	},Relief(){
+	},
+	Relief(token){
 		//领取救济
 		var sign = this.Sign("Speed28","relief",token);
 		var data = `timestamp=${sign.time}&sign=${sign.sign}&token=${token}&imei=${sign.imei}&device=sm%20-%20g530h&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521`
 		var url = `http://interface.juxiangzuan.com/mobile.php?c=Speed28&a=relief`
+		su.post(url)
+			.send(data)
+			.end((error, response)=>{
+				if(!error){
+					cb(null,JSON.parse(response.text))
+				}else{
+					cb(error,null)
+				}
+			})
+	},
+	quizRank(token,cb){
+		var sign = this.Sign("Quiz","quizRank",token)
+		var url = "http://interface.juxiangzuan.com/mobile.php?c=Quiz&a=quizRank";
+		var data = `timestamp=${sign.time}&sign=${sign.sign}&token=${token}&imei=${sign.imei}&device=sm%20-%20g530h&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521`;
+		su.post(url)
+			.send(data)
+			.end((error, response)=>{
+				if(!error){
+					cb(null,JSON.parse(response.text))
+				}else{
+					cb(error,null)
+				}
+			})
+	},
+	receiveWage(token,cb){
+		var sign = this.Sign("Quiz","receiveWage",token)
+		var url = "http://interface.juxiangzuan.com/mobile.php?c=Quiz&a=receiveWage";
+		var data = `timestamp=${sign.time}&sign=${sign.sign}&token=${token}&imei=${sign.imei}&device=sm%20-%20g530h&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521`;
+		su.post(url)
+			.send(data)
+			.end((error, response)=>{
+				if(!error){
+					cb(null,JSON.parse(response.text))
+				}else{
+					cb(error,null)
+				}
+			})
+	},
+	betRecord(token,cb){
+		var sign = this.Sign("NewSpeed28","betRecord",token)
+		var url = "http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=betRecord";
+		var data = `timestamp=${sign.time}&sign=${sign.sign}&token=${token}&imei=${sign.imei}&device=sm%20-%20g530h&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521`;
+		
 		su.post(url)
 			.send(data)
 			.end((error, response)=>{

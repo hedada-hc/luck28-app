@@ -79,9 +79,9 @@ export default{
 		if(tmp != null){
 			tmp = JSON.parse(tmp)
 			if(Array.isArray(tmp)){
-				
+				this.Add(name,JSON.stringify(tmp.push(data)))
 			}else{
-				
+				this.Add(name,JSON.stringify(data))				
 			}
 		}
 	}

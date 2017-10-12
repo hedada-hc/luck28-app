@@ -1,5 +1,6 @@
 <template>
 	<div class="game">
+		<button @click="betRecord">获取数据</button>
 		<h6>当前金币:{{user.UserMoney.data.userF}}</h6>
 		<p>距离第 {{this.game[0].periodNO}} 期开奖还剩 {{time}} 秒</p>
 		<button @click="startHook">开始挂机</button>
@@ -87,6 +88,11 @@
 				this.api.getUser(this.user.jxy.data.token,(error, response)=>{
 					this.user.UserMoney = response
 				});
+			},
+			betRecord(){
+				this.api.betRecord(this.user.jxy.data.token,(error, response)=>{
+					console.log(response)
+				})
 			}
 		}
 	}
