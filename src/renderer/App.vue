@@ -23,6 +23,7 @@
   		width: 100%;
   		height: 60px;
   		background: #ffffff;
+      margin-bottom: 15px;
   		li{
   			padding:0 10px;
   			height: 60px;

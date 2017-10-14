@@ -2,8 +2,9 @@
 	<div class="game">
 		<button @click="betRecord">获取数据</button>
 		<h6>当前金币:{{user.UserMoney.data.userF}}</h6>
+		<span>今日参与：{{Record.todayTotalNum}}</span><span>今日盈利：{{Record.todayProfitAndLoss}}</span><span>今日胜率：{{Record.todayWinRate}}</span>
 		<p>距离第 {{this.game[0].periodNO}} 期开奖还剩 {{time}} 秒</p>
-		<button @click="startHook">开始挂机</button>
+		<button @click="startGuaji">{{guaji ? '停止挂机' : '启动挂机'}}</button>
 		<table>
 			<tr class="game_head">
 				<th>期号</th>
@@ -40,34 +41,58 @@
 				user:null,
 				game:[{"periodNO":0}],
 				time:0,
+				Record:{todayProfitAndLoss:0,todayTotalNum:0,todayWinRate:"0"},
+				duleTimeC:null,
+				guaji:false
 			}
 		},
 		created(){
 			this.user = this.fun.Query("user") == null ? {} : JSON.parse(this.fun.Query("user"));
 			this.user.UserMoney = {"data":{"userF":0}}
-			this.game28List();
+			if(this.duleTimeC == null){
+				this.startHook();
+			}
 		},
 		methods:{
+			startGuaji(){
+				this.guaji = this.guaji ? false : true;
+			},
 			startHook(){
-				setInterval(()=>{
+				this.duleTimeC = setInterval(()=>{
+					if(this.time == 0) this.betRecord()
 					if(this.time <=0){
 						this.game28List();
 					}else{
 						this.time -= 1
-						if(this.time == 69) this.bet(this.game[0].periodNO)
+						if(this.time == 69){
+							if(this.guaji) this.bet(this.game[0].periodNO)
+						} 
 					}
 				},1000)
 			},
 			bet(qihao){
-				this.api.game28Bet(this.user.jxy.data.token,qihao,this.game[1].winNO,(error, response)=>{
-					console.log(error,response)
-					if(response.code == 200){
-						this.game[0].winNO = response.betNum
-						console.log("第 "+qihao+" 期,投注成功 共投注 "+response.betNum+" 豆豆"+ new Date().toString())
-					}else{
-						console.log("第 "+qihao+" 期,投注失败"+response.msg + new Date().toString())
-					}
-					
+				this.api.getGame28(this.user.jxy.data.token,(error, response)=>{
+					this.api.game28Bet(this.user,qihao,response.data.past,(error, response)=>{
+						console.log(error)
+						switch(error){
+							case false:
+								console.log("已达到设置的盈利上限",new Date())
+								this.guaji = false
+								break;
+							case "qi":
+								console.log("追号已达设定期数，已停止",new Date())
+								this.guaji = false
+								//clearInterval(this.duleTimeC);
+								break;
+							default:
+								if(response.code == 200){
+									this.game[0].winNO = response.betNum
+									console.log("第 "+qihao+" 期,投注成功 共投注 "+response.betNum+" 豆豆"+ new Date().toString())
+								}else{
+									console.log("第 "+qihao+" 期,投注失败"+response.msg + new Date().toString())
+								}
+						}
+					});
 				});
 			},
 			handleTime(time){
@@ -79,9 +104,14 @@
 			},
 			game28List(){
 				this.api.getGame28(this.user.jxy.data.token,(error, response)=>{
-					response.data.past.unshift(response.data.current[2])
-					this.game = response.data.past
-					this.duleTime();
+					try{
+						response.data.past.unshift(response.data.current[2])
+						this.game = response.data.past
+						this.duleTime();
+					}catch(e){
+						console.log(error,response,"获取开奖数据失败")
+					}
+					
 				});
 			},
 			getUser(){
@@ -92,6 +122,7 @@
 			betRecord(){
 				this.api.betRecord(this.user.jxy.data.token,(error, response)=>{
 					console.log(response)
+					this.Record = response.data
 				})
 			}
 		}

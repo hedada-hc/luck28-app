@@ -65,13 +65,40 @@ export default{
 		}else{
 			is = "小"
 		}
-
+		
 		if(num % 2 == 0){
 			is += "双"
 		}else{
 			is += "单"
 		}
 
+		return is;
+	},
+	isDS(num){
+		var is = ''
+		if(num % 2 == 0){
+			is = "双"
+		}else{
+			is = "单"
+		}
+		return is;
+	},
+	isDX(num){
+		var is = "";
+		if(num >= 14){
+			is = "大"
+		}else{
+			is = "小"
+		}
+		return is;
+	},
+	isZB(num){
+		var is = ""
+		if(num >= 10 && num <=17){
+			is = "中"
+		}else{
+			is = "边"
+		}
 		return is;
 	},
 	AddLocal(name,data){
@@ -84,5 +111,21 @@ export default{
 				this.Add(name,JSON.stringify(data))				
 			}
 		}
+	},
+	createTail(arr){
+		//尾号生产
+		var tmp = []
+		for(var i=0;i<arr.length;i++){
+			var num = parseInt(arr[i])
+			if(arr[i]<= 7){
+				tmp.push(num)
+				tmp.push(num + 10)
+				tmp.push(num + 20)
+			}else{
+				tmp.push(num)
+				tmp.push(num + 10)
+			}
+		}
+		return tmp;
 	}
 }

@@ -76,22 +76,26 @@ export default{
 			})
 	},
 	game28Bet(token,qihao,num,cb){
-		//投注疯狂28
-		var insertBet = bet.betData(fun.isModel(num));
-		var sign = this.Sign("NewSpeed28","betSave",token);
-		var data = `device=sm%20-%20g530h&versionCode=521&token=${token}&timestamp=${sign.time}&devicetype=2&imei=${sign.imei}&version=521&channel=yingyongbao&versionName=2.1.1&periodNO=${qihao}&sign=${sign.sign}&${insertBet.bet}`
-		var url = `http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=betSave`
-		su.post(url)
-			.send(data)
-			.end((error, response)=>{
-				if(!error){
-					var res = JSON.parse(response.text)
-					res.betNum = insertBet.betNum
-					cb(null,res)
-				}else{
-					cb(error,null)
-				}
-			})
+		//投注疯狂28 .jxy.data.token
+		var insertBet = bet.buildModel(num,token.UserMoney.data.userF);
+		if(insertBet == false){
+			cb(insertBet,null)
+		}else{
+			var sign = this.Sign("NewSpeed28","betSave",token.jxy.data.token);
+			var data = `device=sm%20-%20g530h&versionCode=521&token=${token.jxy.data.token}&timestamp=${sign.time}&devicetype=2&imei=${sign.imei}&version=521&channel=yingyongbao&versionName=2.1.1&periodNO=${qihao}&sign=${sign.sign}&${insertBet.bet}`
+			var url = `http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=betSave`
+			su.post(url)
+				.send(data)
+				.end((error, response)=>{
+					if(!error){
+						var res = JSON.parse(response.text)
+						res.betNum = insertBet.betNum
+						cb(null,res)
+					}else{
+						cb(error,null)
+					}
+				})
+		}
 	},
 	Relief(token){
 		//领取救济

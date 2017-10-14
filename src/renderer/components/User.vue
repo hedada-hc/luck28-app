@@ -26,7 +26,7 @@
 		data(){
 			return{
 				user:{
-					jxy_username:"1006123126@qq.com",
+					jxy_username:"183844707@qq.com",
 					jxy_password:"hdd0313",
 					jxy_data:null,
 					UserMoney:{
