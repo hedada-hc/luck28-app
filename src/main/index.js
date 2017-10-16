@@ -7,7 +7,7 @@ import { app, BrowserWindow } from 'electron'
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
-
+const ipc = require("electron").ipcMain
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
@@ -20,7 +20,10 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1000
+    width: 1000,
+    frame:false,
+    maximizable:false,
+    minimizable:true
   })
 
   mainWindow.loadURL(winURL)
@@ -42,4 +45,14 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+ipc.on("minimize", function(){
+  mainWindow.minimize();
+})
+
+//关闭窗口
+ipc.on("close", function(){
+  app.quit();
+  //mainWindow.close();
 })

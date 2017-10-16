@@ -27,7 +27,7 @@ export default{
 				try{
 					this.saveToken(JSON.parse(response.text));
 				}catch(e){
-					console.log(e,response)
+					console.log(response)
 					alert("登录失败");
 				}
 			})
@@ -40,6 +40,8 @@ export default{
 				user = {}
 				user.jxy = obj;
 			}else{
+				user = null
+				user = {}
 				user.jxy = obj;
 			}
 			fun.Add("user",user);

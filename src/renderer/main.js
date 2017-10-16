@@ -7,6 +7,7 @@ import store from './store'
 import fun from './js/fun'
 import api from './js/api'
 import betModel from './js/model'
+import auth from './js/auth'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
@@ -14,6 +15,7 @@ Vue.config.productionTip = false
 Vue.prototype.fun = fun
 Vue.prototype.api = api
 Vue.prototype.bet = betModel
+Vue.prototype.isAuth = auth
 
 /* eslint-disable no-new */
 new Vue({

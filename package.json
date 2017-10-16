@@ -19,7 +19,7 @@
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "postinstall": "",
-    "packager": "electron-packager ./ taobaoMiao --platform=win32 --arch=ia32 --out ./outApp --version 0.0.1 --overwrite"
+    "packager": "electron-packager ./ luckApp --platform=win32 --arch=ia32 --out ./outApp --version 0.0.1 --overwrite"
   },
   "dependencies": {
     "async": "^2.5.0",
