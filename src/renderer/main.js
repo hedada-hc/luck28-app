@@ -8,6 +8,7 @@ import fun from './js/fun'
 import api from './js/api'
 import betModel from './js/model'
 import auth from './js/auth'
+import analysis from './js/analysis'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
@@ -16,6 +17,7 @@ Vue.prototype.fun = fun
 Vue.prototype.api = api
 Vue.prototype.bet = betModel
 Vue.prototype.isAuth = auth
+Vue.prototype.ana = analysis
 
 /* eslint-disable no-new */
 new Vue({

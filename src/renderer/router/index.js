@@ -26,6 +26,26 @@ export default new Router({
       component: require('@/components/Game/Model')
     },
     {
+      path: '/analysis/luck28',
+      name: 'luck28-analysis',
+      component: require('@/components/Game/AnalysisLuck28')
+    },
+    {
+      path: '/analysis/luck16',
+      name: 'luck16-analysis',
+      component: require('@/components/Game/AnalysisLuck16')
+    },
+    {
+      path: '/analysis/hg28',
+      name: 'Hg28-analysis',
+      component: require('@/components/Game/AnalysisHg28')
+    },
+    {
+      path: '/analysis/pceggs28',
+      name: 'Pceggs28-analysis',
+      component: require('@/components/Game/AnalysisPceggs28')
+    },
+    {
       path: '*',
       redirect: '/'
     }

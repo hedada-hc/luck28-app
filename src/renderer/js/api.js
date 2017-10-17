@@ -62,10 +62,10 @@ export default{
 				}
 			})
 	},
-	getGame28(token,cb){
+	getGame28(token,page = 1,cb){
 		//获取疯狂28开奖数据
 		var sign = this.Sign("NewSpeed28","lists",token);
-		var data = `versionName=2.1.1&device=sm%20-%20g530h&sign=${sign.sign}&versionCode=521&imei=${sign.imei}&token=${token}&version=521&timestamp=${sign.time}&devicetype=2&channel=yingyongbao`
+		var data = `versionName=2.1.1&device=sm%20-%20g530h&sign=${sign.sign}&versionCode=521&page=${page}&imei=${sign.imei}&token=${token}&version=521&timestamp=${sign.time}&devicetype=2&channel=yingyongbao`
 		var url = `http://interface.juxiangzuan.com/mobile.php?c=NewSpeed28&a=lists`
 		su.post(url)
 			.send(data)
@@ -89,6 +89,7 @@ export default{
 			su.post(url)
 				.send(data)
 				.end((error, response)=>{
+
 					if(!error){
 						var res = JSON.parse(response.text)
 						res.betNum = insertBet.betNum

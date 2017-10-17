@@ -148,7 +148,12 @@ export default{
 						
 					}
 
-					
+					//历史10期
+					if(/历史[\d]+期/.test(tmp.old)){
+						var betOldTmp = this.betOld(gameList,tmp.num)
+						bet = betOldTmp ? betOldTmp : bet
+					} 
+
 					//盈利止
 					if(/止/.test(tmp.old)){
 						if(parseInt(doudou) > tmp.num) z = false
@@ -324,6 +329,21 @@ export default{
 		count = /[\d]/.test(count.toString()) ? count : 0
 		fun.Add('ying_count',count + 1)
 		return count + 1;
+	},
+	betOld(lotter,num){
+		//投注历史自定期数开奖号码 格式 历史10期  7 8 10 11 13 14 15 16 17 23 27 winNO
+		var defaults = [1,3,6,10,15,21,28,36,45,55,63,69,73,75,75,73,69,63,55,45,36,28,21,15,10,6,3,1];
+		var undefaults = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		if(lotter.length >= num){
+			for(var i=0;i<num;i++){
+				undefaults[lotter[i].winNO] = defaults[lotter[i].winNO]
+			}
+			console.log(undefaults)
+			return undefaults;
+		}else{
+			alert('设置的历史期数大于数据历史期数不合格已经转化为全包下注');
+			return false;
+		}
 	}
 }
 

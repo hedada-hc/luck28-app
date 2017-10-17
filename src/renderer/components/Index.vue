@@ -4,7 +4,7 @@
 			<div v-if="this.user.username" class="info">
 				<ul>
 					<li>
-						<router-link to="/">
+						<router-link to="/analysis/luck28">
 							<p>疯狂28第 851547	 期 3 + 9 + 3 = <span>15</span></p>
 							<i></i>
 							<div class="set">
@@ -21,7 +21,7 @@
 						<button class="guaji">开始挂机</button>
 					</li>
 					<li>
-						<router-link to="/">
+						<router-link to="/analysis/luck16">
 							<p>极速第 476054 期 6 + 2 + 3 = <span>11</span></p>
 							<i></i>
 							<div class="set">
@@ -38,7 +38,7 @@
 						<button class="guaji">开始挂机</button>
 					</li>
 					<li>
-						<router-link to="/">
+						<router-link to="/analysis/hg28">
 							<p>韩国28第 476054 期 5 + 1 + 4 = <span>10</span></p>
 							<i></i>
 							<div class="set">
@@ -55,7 +55,7 @@
 						<button class="guaji">开始挂机</button>
 					</li>
 					<li>
-						<router-link to="/">
+						<router-link to="/analysis/pceggs28">
 							<p>PC28第 850967 期 8 + 9 + 8 = <span>25</span></p>
 							<i></i>
 							<div class="set">
@@ -189,7 +189,7 @@
 
 <style type="text/css" lang="scss">
 	.index{
-		width: 860px;
+		width: 880px;
 		margin: 0 auto;
 		height: 420px;
 		background: #ffffff;
@@ -213,7 +213,7 @@
 							text-decoration: none;
 							i{
 								display: block;
-							    width: 220px;
+							    width: 348px;
 							    border-bottom: 1px solid #dedede;
 							    float: left;
 							    margin-top: 5px;
@@ -345,7 +345,7 @@
 					outline: none;
 					border:none;
 					color: #ffffff;
-					background:#e8340c;
+					background:#ff651b;
 					width: 250px;
 					height: 30px;
 					margin-left: 66px;

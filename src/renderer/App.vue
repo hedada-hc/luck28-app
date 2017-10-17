@@ -8,8 +8,7 @@
   	<ul class="app_ul">
   		<li><router-link to="/">首页</router-link> </li>
   		<li><router-link to="/user">账号管理</router-link> </li>
-  		<li><router-link to="/user">投注设置</router-link> </li>
-      <li><router-link to="/list">开奖数据</router-link> </li>
+      <li><router-link to="/list">游戏中心</router-link> </li>
   		<li><router-link to="/model">模式设置</router-link> </li>
   	</ul>
     <router-view></router-view>
@@ -34,28 +33,6 @@
 <style lang="scss">
   #app{
     nav{
-        // .close{
-        //     top: 0px;
-        //     z-index: 3;
-        //     position: fixed;
-        //     right: 0;
-        //     display: block;
-        //     width: 4%;
-        //     height: 30px;
-        //     text-align: center;
-        //     line-height: 30px;
-        //     color: #333333;
-        //     cursor: pointer;
-        //     text-decoration: none;
-        //     background:#FF6537;
-        //     color: #ffffff;
-        //     font-family: sans-serif;
-        //     box-shadow: 2px 0px 8px #e4e4e4;
-        // }
-        // .close:hover{
-        //     background:#ff4812;
-        //     color: #ffffff;
-        // }
         a{
             display: block;
             position: absolute;
@@ -67,6 +44,7 @@
             text-align: center;
             line-height: 30px;
             font-family: sans-serif;
+            outline: none;
         }
         a:nth-child(1){
             right: 4%;

@@ -23,7 +23,9 @@ function createWindow () {
     width: 1000,
     frame:false,
     maximizable:false,
-    minimizable:true
+    minimizable:true,
+    hasShadow:true,
+    transparent:true
   })
 
   mainWindow.loadURL(winURL)

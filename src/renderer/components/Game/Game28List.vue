@@ -71,7 +71,7 @@
 				},1000)
 			},
 			bet(qihao){
-				this.api.getGame28(this.user.jxy.data.token,(error, response)=>{
+				this.api.getGame28(this.user.jxy.data.token,1,(error, response)=>{
 					this.api.game28Bet(this.user,qihao,response.data.past,(error, response)=>{
 						console.log(error)
 						switch(error){
@@ -103,7 +103,7 @@
 				this.getUser();
 			},
 			game28List(){
-				this.api.getGame28(this.user.jxy.data.token,(error, response)=>{
+				this.api.getGame28(this.user.jxy.data.token,1,(error, response)=>{
 					try{
 						response.data.past.unshift(response.data.current[2])
 						this.game = response.data.past
@@ -121,8 +121,11 @@
 			},
 			betRecord(){
 				this.api.betRecord(this.user.jxy.data.token,(error, response)=>{
-					console.log(response)
-					this.Record = response.data
+					if(!error){
+						this.Record = response.data
+					}else{
+						console.log("获取失败, this.api.betRecord")
+					}
 				})
 			}
 		}
