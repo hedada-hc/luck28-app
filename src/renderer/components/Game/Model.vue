@@ -14,7 +14,7 @@
 				<li>
 					<label>所有规则:</label>
 					<div class="guiz">
-						<a v-for="item in allReg" @click="selectReg(item)" href="javascript:;">{{item}}</a>
+						<a v-for="item in allReg" @click="selectReg($event,item)"  href="javascript:;">{{item}}</a>
 					</div>
 				</li>
 				<li class="btn">
@@ -52,7 +52,7 @@
 				modelText:'',
 				gameList:[],
 				user:null,
-				allReg:["{去尾}","{压尾}","{输翻1}","{止100000}","{10倍}","{上1期-号码一}","{上1期-号码二}","{上1期-号码三}","{上1期-号码}","{上1期-组合}","{上1期-单双}","{上1期-大小}","{上1期-中边}","{中}","{边}","{大}","{小}","{单}","{双}","{追0-100期}","{切换模式-模式名称}","{输后}","{赢后}","{输加200}","{历史20期}","{10期热号-10位}","{10期冷号-10位}"],
+				allReg:["{去尾}","{压尾}","{输翻1}","{止100000}","{10倍}","{上1期-号码一}","{上1期-号码二}","{上1期-号码三}","{上1期-号码}","{上1期-组合}","{上1期-单双}","{上1期-大小}","{上1期-中边}","{中}","{边}","{大}","{小}","{单}","{双}","{追0-100期}","{切换模式-模式名称}","{输后}","{赢后}","{输加200}","{历史20期}","{20期热号-10位}","{20期冷号-5位}","{开0}","{选号-1|2|3|4|5|6}","{100期停}"],
 				modelSelect:{},
 				tmpAllModel:null
 			}
@@ -76,13 +76,19 @@
 				}
 			},
 			buildModel(){
-				this.api.getGame28(this.user.jxy.data.token,(error, response)=>{
+				this.api.getGame28(this.user.jxy.data.token,1,(error, response)=>{
 					this.gameList = response.data.past
 					this.bet.buildModel(this.gameList)
 				});
 			},
-			selectReg(item){
-				this.modelText += item
+			selectReg(e,item){
+				if(e.target.className != 'guiza'){
+					e.target.className = 'guiza'
+					this.modelText += item
+				}else{
+					e.target.className = ''
+					this.modelText = this.modelText.replace(item,"")
+				}
 			},
 			selectModel(item){
 				this.modelSelect = item;
@@ -171,8 +177,15 @@
     					margin-left: 74px;
 						a{
 							text-decoration: none;
-							font-size:13px;
-							color: #ff5a27;
+						    font-size: 13px;
+						    color: #ffffff;
+						    background: #a2a2a2;
+						    margin: 4px;
+						    display: inline-block;
+						    padding: 1px 6px;
+						}
+						.guiza{
+							background: #27a5ff;
 						}
 					}
 					span{

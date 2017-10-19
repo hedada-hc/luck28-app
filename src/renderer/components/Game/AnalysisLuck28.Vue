@@ -19,16 +19,13 @@
 					<span>中 {{zhongbian.zhong}} | 边 {{zhongbian.bian}}</span>
 				</li>
 			</ul>
-			<table class="count_info">
-				<tr>
-					<th>号码</th>
-					<th>出现次数</th>
-				</tr>
-				<tr v-for="item in re">
-					<td>{{item.num}}</td>
-					<td>{{item.count}}</td>
-				</tr>
-			</table>
+			<ul class="count_info">
+				<p>{{qi}} 期数据统计号码出现频率</p>
+				<li v-for="item in re">
+					<span>{{item.num}}</span>
+					<p>{{item.count}}</p>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -60,6 +57,9 @@
 				this.danshuang = this.ana.getReDS(this.lotterData,this.qi)
 				this.daxiao = this.ana.getReDX(this.lotterData,this.qi)
 				this.zhongbian = this.ana.getReZB(this.lotterData,this.qi)
+				console.log(this.danshuang)
+				console.log(this.daxiao)
+				console.log(this.zhongbian)
 			},
 			game28List(page){
 				if(page >= 1){
@@ -163,6 +163,19 @@
 			.count_info{
 				list-style: none;
 				float: left;
+				li{
+					float: left;
+					p{
+						float: left;
+						text-align: center;
+					}
+					span{
+						float: left;
+						display: block;
+						text-align: center;
+						
+					}
+				}
 			}
 		}
 	}

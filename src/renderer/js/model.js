@@ -60,7 +60,6 @@ export default{
 		for(var i=0;i<modelReg.length;i++){
 			var tmp = modelReg[i]
 			if(typeof tmp == "object"){
-
 				if(tmp.tail){
 					//取得期数数据
 					switch(tmp.tail[1]){
@@ -123,7 +122,6 @@ export default{
 					if(/([\d]+)倍/.test(tmp.old)) pl += tmp.num;
 
 					//输翻
-					console.log(/输翻/.test(tmp.old),gameList[0].insertF,gameList[0].winLoss)
 					if(/输翻/.test(tmp.old) && gameList[0].insertF > 0 &&  gameList[0].winLoss <= 0){
 						console.log(pl,tmp.num)
 						pl += tmp.num
@@ -141,11 +139,27 @@ export default{
 
 					//输后
 					if(tmp.old == "输后"  && gameList[0].insertF > 0 &&  gameList[0].winLoss <= 0){
-						
+						if(typeof modelReg[i+1] == "object"){
+							if(/选号-/.test(modelReg[i+1].old)){
+								bet = this.xuanhao(modelReg[i+1].old.split("-"))
+							}
+						}else{
+							if(/切换模式-/.test(modelReg[i+1])){
+								this.qiehuanModel(modelReg[i+1].split("-")[1],gameList,doudou)
+							}
+						}
 					}
 					//赢后
 					if(tmp.old == "赢后" &&  gameList[0].winLoss > 0){
-						
+						if(typeof modelReg[i+1] == "object"){
+							if(/选号-/.test(modelReg[i+1].old)){
+								bet = this.xuanhao(modelReg[i+1].old.split("-"))
+							}
+						}else{
+							if(/切换模式-/.test(modelReg[i+1])){
+								this.qiehuanModel(modelReg[i+1].split("-")[1],gameList,doudou)
+							}
+						}
 					}
 
 					//历史10期
@@ -157,6 +171,31 @@ export default{
 					//盈利止
 					if(/止/.test(tmp.old)){
 						if(parseInt(doudou) > tmp.num) z = false
+					}
+
+					//对号
+					if(/开/.test(tmp.old)){
+						if(tmp.num == gameList[0].winNO){
+							if(typeof modelReg[i+1] == "object"){
+								if(/选号-/.test(modelReg[i+1].old)){
+									var xh = modelReg[i+1].old.split("-")
+									bet = this.xuanhao(xh)
+								}
+							}else{
+								if(/切换模式-/.test(modelReg[i+1])){
+									this.qiehuanModel(modelReg[i+1].split("-")[1],gameList,doudou)
+								}
+							}
+						}else{
+							console.log(gameList[0].winNO)
+						}
+					}
+
+					//期停
+					if(/期停/.test(tmp.old)){
+						if(this.countQi() >= tmp.num){
+							z = false
+						}
 					}
 				}
 			}else{
@@ -180,7 +219,7 @@ export default{
 						bet = [1,0,6,0,15,0,28,0,45,0,63,0,73,0,75,0,69,0,55,0,36,0,21,0,10,0,3,0]
 						break;
 				}
-
+				
 			}
 		}
 		//赢了
@@ -343,6 +382,57 @@ export default{
 		}else{
 			alert('设置的历史期数大于数据历史期数不合格已经转化为全包下注');
 			return false;
+		}
+	},
+	duihaoBet(){
+		//对号投注
+	},
+	qiehuanModel(name,gameList,dou){
+		//切换模式
+		var m = fun.Query("model");
+		if(m != null){
+			var model = JSON.parse(m);
+			for(var i=0;i<model.length;i++){
+				if(model[i].name == name){
+					fun.Add('selectModel',JSON.stringify(model[i]));
+					this.buildModel(gameList,dou)
+				}
+			}
+		}else{
+			console.log("没有找到对应的切换模式:"+name)
+		}
+	},
+	findQHModel(arr){
+		//找出切换的模式
+		var name = ""
+		for(var i=0;i<arr.length;i++){
+			if(typeof arr[i] != "object"){
+				if(/切换模式-/.test(arr[i])){
+					name = /切换模式-(.*)/.exec(arr[i])[1]
+				}
+			}
+		}
+		return name;
+	},
+	xuanhao(obj){
+		var defaults = [1,3,6,10,15,21,28,36,45,55,63,69,73,75,75,73,69,63,55,45,36,28,21,15,10,6,3,1];
+		var undefaults = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var num = obj[1].split("|");
+		for(var i=0;i<num.length;i++){
+			undefaults[num[i]] = defaults[num[i]];
+		}
+		return undefaults;
+	},
+	countQi(){
+		//记录下注期数
+		var count = fun.Query("count_qi")
+		if(/[\d]+/.test(count)){
+			var num = parseInt(count) + 1
+			fun.Add('count_qi',num)
+			return num
+		}else{
+			fun.Add('count_qi',1)
+			return 1
 		}
 	}
 }
