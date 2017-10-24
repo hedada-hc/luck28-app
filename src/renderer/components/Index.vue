@@ -1,75 +1,30 @@
 <template>
 	<div class="index">
 		<div class="content">
-			<div v-if="this.user.username" class="info">
+			<div v-if="isLG" class="info">
 				<ul>
 					<li>
-						<router-link to="/analysis/luck28">
-							<p>疯狂28第 851547	 期 3 + 9 + 3 = <span>15</span></p>
+						<a href="javascript:;">
+							<p>疯狂28第 {{lotter.luck28[0].periodNO}}	 期 {{lotter.luck28[0].num1}} + {{lotter.luck28[0].num2}} + {{lotter.luck28[0].num3}} = <span>{{lotter.luck28[0].winNO}}</span> 还剩<span>{{time}}</span>秒</p>
 							<i></i>
 							<div class="set">
 								<label>当前模式:</label>
-								<select>
-									<option value ="volvo">追号</option>
-									<option value ="saab">去三尾挂机</option>
-									<option value="opel">压尾</option>
-									<option value="audi">调号</option>
+								<select v-model="selectModel">
+									<option v-for="(item,index) in allModel" :value ="item.name">{{item.name}}</option>
 								</select>
 								<button>+</button>
 							</div>
-						</router-link>
-						<button class="guaji">开始挂机</button>
-					</li>
-					<li>
-						<router-link to="/analysis/luck16">
-							<p>极速第 476054 期 6 + 2 + 3 = <span>11</span></p>
-							<i></i>
-							<div class="set">
-								<label>当前模式:</label>
-								<select>
-									<option value ="volvo">追号</option>
-									<option value ="saab">去三尾挂机</option>
-									<option value="opel">压尾</option>
-									<option value="audi">调号</option>
-								</select>
-								<button>+</button>
-							</div>
-						</router-link>
-						<button class="guaji">开始挂机</button>
-					</li>
-					<li>
-						<router-link to="/analysis/hg28">
-							<p>韩国28第 476054 期 5 + 1 + 4 = <span>10</span></p>
-							<i></i>
-							<div class="set">
-								<label>当前模式:</label>
-								<select>
-									<option value ="volvo">追号</option>
-									<option value ="saab">去三尾挂机</option>
-									<option value="opel">压尾</option>
-									<option value="audi">调号</option>
-								</select>
-								<button>+</button>
-							</div>
-						</router-link>
-						<button class="guaji">开始挂机</button>
-					</li>
-					<li>
-						<router-link to="/analysis/pceggs28">
-							<p>PC28第 850967 期 8 + 9 + 8 = <span>25</span></p>
-							<i></i>
-							<div class="set">
-								<label>当前模式:</label>
-								<select>
-									<option value ="volvo">追号</option>
-									<option value ="saab">去三尾挂机</option>
-									<option value="opel">压尾</option>
-									<option value="audi">调号</option>
-								</select>
-								<button>+</button>
-							</div>
-						</router-link>
-						<button class="guaji">开始挂机</button>
+						</a>
+						<button class="guaji" @click="startG">{{guaji ? '停止挂机' : '开始挂机'}}</button>
+						<router-link to="/analysis/luck28"><button class="fenxi">数据分析</button></router-link>
+						<div class="guaji_info">
+							<span>账户豆豆：<i>{{luck_user.UserMoney.data.userF}}</i></span>
+							<span>上期盈利：<i :class="lotter.luck28[0].winLoss > 0 ? '' : 'shu'">{{lotter.luck28[0].winLoss}}</i></span>
+							<span>当前模式: <i>{{nowModelName}}</i></span>
+						</div>
+						<div class="log">
+							<p v-for="item in log">{{item}}</p>
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -77,7 +32,7 @@
 				<ul>
 					<li class="title">
 						<p>你要辅助 - 登录</p>
-						<span>你要论坛用户免费使用 <a href="javascript:;" @click="openUrl('http://www.dz.com/member.php?mod=register')" target="_blank">免费注册</a></span>
+						<span>你要论坛用户免费使用 <a href="javascript:;" @click="openUrl('http://www.ni1.cc/member.php?mod=register')" target="_blank">免费注册</a></span>
 					</li>
 					<li>
 						<label>账  号:</label>
@@ -94,7 +49,7 @@
 					</li>
 				</ul>
 				<button @click="login">登录</button>
-				<button @click="openUrl('http://www.dz.com/member.php?mod=register')">注册</button>
+				<button @click="openUrl('http://www.ni1.cc/member.php?mod=register')">注册</button>
 				<div class="ad">
 					<span :class="ad.ad ? 'tsad' : 'tsad_hide'">广告</span>
 					<img v-if="ad.type == 'img'" :src="ad.img_url" @click="openUrl(ad.url)">
@@ -111,33 +66,53 @@
 	export default{
 		data(){
 			return {
-				username:"hezone",
-				password:"admin123",
+				username:"",
+				password:"",
 				codeUrl:"",
 				code:"",
 				cookie:"",
 				secverify:"",
 				user:{},
 				isLG:false,
-				ad:{}
+				ad:{},
+				lotter:{
+					luck28:[{periodNO:0,num1:0,num2:0,num3:0,winNO:0}],
+					korea28:[{periodNO:0,num1:0,num2:0,num3:0,winNO:0}]
+				},
+				luck_user:{UserMoney:{data:{userF:0}}},
+				selectModel:"",
+				allModel:{},
+				guaji:false,
+				duleTimeC:null,
+				time:0,
+				nowModelName:"",
+				log:["欢迎使用你要助手，你现在看到的是日志记录区"]
 			}
 		},
 		created(){
-			this.user = this.fun.Query('auth') != null ? JSON.parse(this.fun.Query('auth')) : {}
-			this.getCodeURL();
+			this.guaji = this.fun.Query('guaji') != null ? JSON.parse(this.fun.Query('guaji')) : null
+			this.user = this.fun.Query('auth') != null ? JSON.parse(this.fun.Query('auth')) : null
+			this.luck_user = this.fun.Query('user') != null ? JSON.parse(this.fun.Query('user')) : {UserMoney:{data:{userF:0}}}
+			this.allModel = this.fun.Query('model') != null ? JSON.parse(this.fun.Query('model')) : {}
 			this.isLogin();
+			this.getCodeURL();
 			this.getAd();
+			this.queryLotter();
+			this.Korea28();
+			this.startHook();
+			this.getUser();
+			this.nowModel();
 		},
 		methods:{
 			login(){
 				this.isAuth.Login(this.username,this.password,this.secverify.formhash,this.secverify.idhash,this.code,this.cookie,(error, response)=>{
 					if(!error){
-						this.fun.Add('auth',response)
-						this.user = JSON.parse(response)
-						this.isLG = true
+						this.fun.Add('auth',response);
+						this.user = JSON.parse(response);
+						this.isLG = true;
 					}else{
-						alert('登录失败用户名或者密码错误')
-						this.isLG = false
+						alert('登录失败用户名或者密码错误');
+						this.isLG = false;
 					}
 				})
 			},
@@ -151,7 +126,9 @@
 				});
 			},
 			getCodeURL(){
+
 				this.isAuth.getCode((error, res)=>{
+					console.log("sdsdsd")
 					this.codeUrl = res.url
 					this.cookie = res.cookie
 					this.secverify = res
@@ -159,10 +136,11 @@
 				})
 			},
 			isLogin(){
-				if(this.user.cookie){
+				if(this.user != null){
 					this.isAuth.isLogin(this.user.cookie,(err,res)=>{
 						if(err){
 							this.user = {}
+							this.fun.Add('auth',null);
 							this.isLG = false
 						}else{
 							this.isLG = true
@@ -176,12 +154,132 @@
 				//获取广告
 				this.isAuth.getAd((err,res)=>{
 					//this.ad = {"type":"text","content":"虚位以待 广告投放联系QQ：531159249","url":"http://www.dz.com"}
-					this.ad = JSON.parse(res)
+					if(typeof res == "object") this.ad = res
+					else this.ad = JSON.parse(res)
+					
 				});
-				
 			},
 			openUrl(url){
 				shell.openExternal(url)
+			},
+			queryLotter(){
+				//查询开奖数据
+				if(this.luck_user.jxy){
+					this.api.getGame28(this.luck_user.jxy.data.token,1,(error, response)=>{
+						if(!error){
+							if(response.msg == "验证失败！"){
+								alert("请重新登录聚享游")
+								this.$router.push('/user')
+							}else{
+								this.lotter.luck28 = response.data.past
+								this.time = this.fun.scheduleTime(parseInt(this.lotter.luck28[0].cDate) + 90);
+								this.getUser();
+							}
+						}else{
+							console.log(error)
+						}
+					});
+				}else{
+					if(this.isLG) this.$router.push('/user')
+				}
+			},
+			Korea28(){
+				if(this.luck_user.jxy){
+					this.api.Korea28(this.luck_user.jxy.data.token,1,(error, response)=>{
+						if(!error){
+							this.lotter.korea28 = response.data.past
+						}else{
+							console.log(error)
+						}
+					});
+				}
+			},
+			startG(){
+				if(this.selectModel == ""){
+					this.addLog("请先选择模式")
+					return
+				}
+				if(this.allModel.length > 0){
+					for(var i=0;i<this.allModel.length;i++){
+						if(this.allModel[i].name == this.selectModel && this.guaji == false){
+							this.fun.Add('selectModel',JSON.stringify(this.allModel[i]));
+							this.addLog("模式："+this.allModel[i].name+" 已经启用")
+						}
+					}
+				}else{
+					alert("请先添加模式");
+					this.$router.push('/model')
+					return
+				}
+				this.stopG();
+				this.nowModel();
+			},
+			startHook(){
+				this.duleTimeC = setInterval(()=>{
+					if(this.time <= 0){
+						this.queryLotter();
+					}else{
+						this.time -= 1
+						if(this.time == 69){
+							if(this.guaji) this.bet(parseInt(this.lotter.luck28[0].periodNO) + 1)
+						} 
+					}
+				},1000)
+			},
+			bet(qihao){
+				this.api.getGame28(this.luck_user.jxy.data.token,1,(error, response)=>{
+					this.api.game28Bet(this.luck_user,qihao,response.data.past,(error, response)=>{
+						var time = this.fun.formatDateTime(parseInt(new Date().getTime().toString().substr(0,10)));
+						switch(error){
+							case false:
+								this.addLog("已达到设置的盈利上限 "+ time)
+								this.stopG(false)
+								break;
+							case "qi":
+								this.addLog("追号已达设定期数，已停止 "+ time)
+								this.stopG(false)
+								break;
+							default:
+								if(response.code == 200){
+									//this.lotter.luck28[0].winNO = response.betNum
+									this.addLog("第 "+qihao+" 期,投注成功 共投注 "+response.betNum+" 豆豆 "+ time)
+								}else{
+									this.addLog("第 "+qihao+" 期,投注失败"+response.msg+" "+ time)
+								}
+						}
+					});
+				});
+			},
+			getUser(){
+				if(this.luck_user.jxy){
+					this.api.getUser(this.luck_user.jxy.data.token,(error, response)=>{
+						console.log(response)
+						this.luck_user.UserMoney = response
+						this.fun.Add('user',JSON.stringify(this.luck_user));
+					});
+				}
+			},
+			nowModel(){
+				var model = this.fun.Query('selectModel')
+				if(model != null){
+					this.nowModelName = JSON.parse(model).name
+				}
+			},
+			stopG(type = null){
+				//停止挂机
+				if(type == null){
+					this.guaji = this.guaji ? false : true;
+				}else{
+					this.guaji = type
+				}
+				this.fun.Add('guaji',this.guaji)
+				if(this.guaji == false) this.addLog("挂机已经停止运行，如果需要挂机请开始!")
+			},
+			addLog(log){
+				this.log.push(log)
+				if(this.log.length == 7){
+					this.log.splice(0,1);
+				}
 			}
 		}
 	}
@@ -277,6 +375,52 @@
 						    height: 70px;
 						    margin-top: -62px;
 						    margin-right: -9px;
+						    cursor: pointer;
+						}
+						.guaji_info{
+							width: 100%;
+							margin-left: -10px;
+							background: #ffffff;
+							margin-top: 8px;
+						    box-shadow: 0 1px 7px #e4e4e4;
+						    width: 390px;
+						    padding: 6px 10px;
+							span{
+								color: #333333;
+								i{
+									font-style: normal;
+									color: #ff651b;
+								}
+								.shu{
+									color: #00b158;
+								}
+							}
+						}
+						.log{
+							background: #545454;
+							margin-top: 0px;
+							margin-left: -10px;
+							// box-shadow: 0 3px 5px #989898;
+							overflow: hidden;
+						    width: 390px;
+						    padding: 10px 10px;
+						    height: 90px;
+						    p{
+						    	color: #c3ff14;
+						    }
+						}
+						.fenxi{
+							border: none;
+						    outline: none;
+						    color: #ffffff;
+						    background: #158cf5;
+						    width: 60px;
+						    font-size: 12px;
+						    line-height: 25px;
+						    float: right;
+						    height: 70px;
+						    margin-top: -62px;
+						    margin-right: 2px;
 						    cursor: pointer;
 						}
 						.guaji:hover{

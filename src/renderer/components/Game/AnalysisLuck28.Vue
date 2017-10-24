@@ -121,7 +121,6 @@
 			.count{
 				width: 844px;
 			    display: block;
-			    height: 150px;
 			    margin: 0 auto;
 				li{
 					float: left;
@@ -163,20 +162,27 @@
 			.count_info{
 				list-style: none;
 				float: left;
+				width: 100%;
+				p{
+					text-align: center;
+					color: #666666;
+					font-size: 14px;
+				}
 				li{
 					float: left;
+					padding:4px;
 					p{
-						float: left;
 						text-align: center;
 					}
 					span{
-						float: left;
 						display: block;
 						text-align: center;
-						
+
 					}
 				}
 			}
 		}
 	}
 </style>
+
+

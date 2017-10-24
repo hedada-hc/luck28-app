@@ -8,8 +8,9 @@
   	<ul class="app_ul">
   		<li><router-link to="/">首页</router-link> </li>
   		<li><router-link to="/user">账号管理</router-link> </li>
-      <li><router-link to="/list">游戏中心</router-link> </li>
+      <!-- <li><router-link to="/list">游戏中心</router-link> </li> -->
   		<li><router-link to="/model">模式设置</router-link> </li>
+      <li><button @click="clear">清空缓存</button></li>
   	</ul>
     <router-view></router-view>
   </div>
@@ -25,17 +26,19 @@
             },
             minimize(){
                 ipc.send("minimize");
+            },
+            clear(){
+              console.log(this.fun.Clear());
             }
         }
     }
 </script>
-
 <style lang="scss">
   #app{
     nav{
         a{
             display: block;
-            position: absolute;
+            position: fixed;
             text-decoration: none;
             color: #333333;
             z-index:10;

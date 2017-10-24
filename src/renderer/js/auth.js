@@ -4,7 +4,7 @@
 import superagent from 'superagent'
 
 export default{
-	domain:'www.dz.com',
+	domain:'www.ni1.cc',
 	cookie:'',
 	tmpCookie:{},
 	Login(username,password,formhash,idhash,code,cookie,cb){
@@ -40,6 +40,7 @@ export default{
 		var url = `http://${this.domain}/member.php?mod=logging&action=login&infloat=yes&handlekey=login&inajax=1&ajaxtarget=fwin_content_login`;
 		superagent.get(url)
 			.end((error, response)=>{
+				console.log(error,response)
 				var formhash = /name="formhash"\svalue="([\w]+)"\s\/>/.exec(response.text)[1]
 				var seccodehash = /updateseccode\('([\w]+)',/.exec(response.text)[1]
 				this.cookie = this.handleCookie(response.headers['set-cookie']);
@@ -86,27 +87,36 @@ export default{
 	isLogin(cookie,cb){
 		//检测是否在线
 		var url = `http://${this.domain}/home.php?mod=spacecp`
+
 		superagent.get(url)
 			.set("Cookie",cookie)
 			.end((error, response)=>{
-				if(/您需要先登录才能继续本操作/.test(response.text)){
-					cb("您需要先登录才能继续本操作",null)
+				if(!error){
+					if(/您需要先登录才能继续本操作/.test(response.text)){
+						cb("您需要先登录才能继续本操作",null)
+					}else{
+						cb(null,"success")
+					}
 				}else{
-					cb(null,"success")
+					cb("网站出现问题或网络出现问题无法连接",null)
 				}
 			})
 	},
 	getAd(cb){
-		var url = `http://${this.domain}/home.php?mod=space&uid=1&do=blog&id=1`;
+		var url = `http://${this.domain}/ad/ad.json`;
 		superagent.get(url)
 			.end((error, response)=>{
-				var ad = /class="d\scl">(.*?)<\/div>/.exec(response.text)[1]
-				if(!/"type":"text"/.test(ad) && /target="_blank"><img src=/.test(ad)){
-					var imgUrl = /<a href="(.*?)%22\+target=%22_blank%22\+target=%22_blank"\starget="_blank"><img src=".*"><\/a>/.exec(ad)[1]
-					ad = ad.replace(/<a href="(.*?)%22\+target=%22_blank%22\+target=%22_blank"\starget="_blank"><img src=".*"><\/a>/,`"${imgUrl}"`)
+				var ad = JSON.parse(response.text)
+				var tmp = null
+				for(var i=0;i<ad.length;i++){
+					if(ad[i].ad){
+						tmp = ad[i]
+					}
 				}
-				cb(null,ad)
+				cb(null,tmp)
 			})
 	}
 
 }
+
+

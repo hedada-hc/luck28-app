@@ -20,6 +20,10 @@ export default{
 		var local = window.localStorage;
 		return local.removeItem(name)
 	},
+	Clear(){
+		var local = window.localStorage;
+		return local.clear();
+	},
 	betData(){
 		//生成投注数据
 		var betting = ""
