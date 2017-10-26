@@ -8,6 +8,8 @@
 					<span>金币:{{user[0].UserMoney.data.userG}}</span>
 					<span>豆豆:{{user[0].UserMoney.data.userF}}</span>
 					<span>昵称:{{user[0].data.jxy.data.nick_name}}</span>
+					<button @click="Relief">领取救济</button>
+					<button @click="clear" class="clear">清空缓存</button>
 				</div>
 				<div v-else class="index_login">
 					<img :src="user[0].data.jxy.data.image">
@@ -16,6 +18,7 @@
 					<span>密码:</span>
 					<input type="password" v-model="user[0].password" name="">
 					<button @click="login">登录</button>
+					<button @click="clear" class="clear">清空缓存</button>
 				</div>
 			</li>
 		</ul>
@@ -76,7 +79,22 @@
 					this.user[0].UserMoney = response
 					if(type) this.$router.push('/')
 				});
-			}
+			},
+			Relief(){
+				this.api.Relief(this.user[0].data.jxy.data.token,(error, response)=>{
+					if(!error){
+						if(response.msg == "ok"){
+							alert("救济领取成功！");
+							this.queryUser(true);
+						}else{
+							alert(response.msg)
+						}
+					}
+				})
+			},
+            clear(){
+              console.log(this.fun.Clear());
+            }
 		}
 	}
 </script>
@@ -93,6 +111,7 @@
 				list-style: none;
 				border-radius: 8px;
 				box-shadow: 0 2px 14px #f1f1f1;
+				
 				p{
 					text-align: center;
 					line-height: 38px;
@@ -118,6 +137,25 @@
 						display: block;
 						float: left;
 						margin: 24px 2px 0 14px;
+					}
+					button{
+						outline: none;
+						border:none;
+						width: 86px;
+						height: 30px;
+						color: #ffffff;
+						cursor: pointer;
+						float: right;
+	    				border-radius: 20px;
+	    				margin: 16px;
+	    				background:#31c37c;
+					}
+					.clear{
+						outline: none;
+			          	border:none;
+			          	color: #ffffff;
+			          	background:#ff651b;
+			          	border-radius:20px;
 					}
 				}
 				.index_login{
@@ -149,6 +187,13 @@
 					    padding: 4px;
 					    box-shadow: 0px 1px 27px #efefef;
 	    				font-size: 12px;
+					}
+					.clear{
+						outline: none;
+			          	border:none;
+			          	color: #ffffff;
+			          	background:#ff651b;
+			          	border-radius:20px;
 					}
 					button{
 						outline: none;

@@ -131,5 +131,12 @@ export default{
 			}
 		}
 		return tmp;
+	},
+	listYuce(num1,num2){
+		//列表预测
+		num1 = num1.length == 2 ? num1.substr(1,1) : num1.substr(0,1);
+		num2 = num2.length == 2 ? num2.substr(1,1) : num2.substr(0,1);
+		var res = parseInt(num1) + parseInt(num2);
+		return this.isDS(res)
 	}
 }

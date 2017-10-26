@@ -40,7 +40,6 @@ export default{
 		var url = `http://${this.domain}/member.php?mod=logging&action=login&infloat=yes&handlekey=login&inajax=1&ajaxtarget=fwin_content_login`;
 		superagent.get(url)
 			.end((error, response)=>{
-				console.log(error,response)
 				var formhash = /name="formhash"\svalue="([\w]+)"\s\/>/.exec(response.text)[1]
 				var seccodehash = /updateseccode\('([\w]+)',/.exec(response.text)[1]
 				this.cookie = this.handleCookie(response.headers['set-cookie']);

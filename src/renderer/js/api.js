@@ -104,7 +104,7 @@ export default{
 				})
 		}
 	},
-	Relief(token){
+	Relief(token,cb){
 		//领取救济
 		var sign = this.Sign("Speed28","relief",token);
 		var data = `timestamp=${sign.time}&sign=${sign.sign}&token=${token}&imei=${sign.imei}&device=sm%20-%20g530h&versionCode=521&devicetype=2&versionName=2.1.1&channel=yingyongbao&version=521`

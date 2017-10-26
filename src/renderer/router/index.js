@@ -46,6 +46,11 @@ export default new Router({
       component: require('@/components/Game/AnalysisPceggs28')
     },
     {
+      path: '/gre',
+      name: 'gre-analysis',
+      component: require('@/components/greLogin')
+    },
+    {
       path: '*',
       redirect: '/'
     }

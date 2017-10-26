@@ -2,6 +2,7 @@
  * 数据分析模块
 */
 import fun from './fun'
+
 export default{
 	getReNum(lotter,qi,num = 0,type = false){
 		//获取热号 
@@ -31,6 +32,19 @@ export default{
 			return false
 		}
 		return count
+	},
+	fillNum(obj){
+		//填充未出现的号码
+		var all = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27];
+		var fill = [];
+		for(var i=0;i<obj.length;i++){
+			all[obj[i].num] = null;
+		}
+		
+		for(var i=0;i<all.length;i++){
+			if(all[i] != null) obj.push({"num":all[i],"count":0})
+		}
+		return obj
 	},
 	getLengNum(lotter,qi,num){
 		//获取冷号

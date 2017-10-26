@@ -97,11 +97,7 @@
 			this.isLogin();
 			this.getCodeURL();
 			this.getAd();
-			this.queryLotter();
-			this.Korea28();
-			this.startHook();
-			this.getUser();
-			this.nowModel();
+			
 		},
 		methods:{
 			login(){
@@ -128,7 +124,7 @@
 			getCodeURL(){
 
 				this.isAuth.getCode((error, res)=>{
-					console.log("sdsdsd")
+					console.log(error,res)
 					this.codeUrl = res.url
 					this.cookie = res.cookie
 					this.secverify = res
@@ -144,6 +140,11 @@
 							this.isLG = false
 						}else{
 							this.isLG = true
+							this.queryLotter();
+							this.Korea28();
+							this.startHook();
+							this.getUser();
+							this.nowModel();
 						}
 					})
 				}else{
@@ -168,8 +169,8 @@
 					this.api.getGame28(this.luck_user.jxy.data.token,1,(error, response)=>{
 						if(!error){
 							if(response.msg == "验证失败！"){
-								alert("请重新登录聚享游")
-								this.$router.push('/user')
+								//alert("请重新登录聚享游")
+								//this.$router.push('/user')
 							}else{
 								this.lotter.luck28 = response.data.past
 								this.time = this.fun.scheduleTime(parseInt(this.lotter.luck28[0].cDate) + 90);
@@ -180,7 +181,8 @@
 						}
 					});
 				}else{
-					if(this.isLG) this.$router.push('/user')
+					console.log(this.isLG)
+					if(this.isLG && this.user.username) this.$router.push('/user')
 				}
 			},
 			Korea28(){
@@ -201,7 +203,7 @@
 				}
 				if(this.allModel.length > 0){
 					for(var i=0;i<this.allModel.length;i++){
-						if(this.allModel[i].name == this.selectModel && this.guaji == false){
+						if(this.allModel[i].name == this.selectModel){
 							this.fun.Add('selectModel',JSON.stringify(this.allModel[i]));
 							this.addLog("模式："+this.allModel[i].name+" 已经启用")
 						}
@@ -240,12 +242,7 @@
 								this.stopG(false)
 								break;
 							default:
-								if(response.code == 200){
-									//this.lotter.luck28[0].winNO = response.betNum
-									this.addLog("第 "+qihao+" 期,投注成功 共投注 "+response.betNum+" 豆豆 "+ time)
-								}else{
-									this.addLog("第 "+qihao+" 期,投注失败"+response.msg+" "+ time)
-								}
+								this.addLog("第 "+qihao+" 期 "+response.msg+" 共投注："+response.betNum+" 豆豆 "+ time)
 						}
 					});
 				});

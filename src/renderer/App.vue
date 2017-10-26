@@ -8,9 +8,8 @@
   	<ul class="app_ul">
   		<li><router-link to="/">首页</router-link> </li>
   		<li><router-link to="/user">账号管理</router-link> </li>
-      <!-- <li><router-link to="/list">游戏中心</router-link> </li> -->
+      <li><router-link to="/gre">游戏中心</router-link> </li>
   		<li><router-link to="/model">模式设置</router-link> </li>
-      <li><button @click="clear">清空缓存</button></li>
   	</ul>
     <router-view></router-view>
   </div>
@@ -96,6 +95,14 @@
   			text-align: center;
   			list-style: none;
   			float: left;
+        button{
+          outline: none;
+          border:none;
+          color: #ffffff;
+          background:#ff651b;
+          padding:10px;
+          border-radius:20px;
+        }
         a{
           display: block;
           width: 100%;
